@@ -1,0 +1,8 @@
+
+{
+  "name": "Dilaf - Soluciones Contables Futuristas",
+  "description": "Una plataforma web corporativa de alta tecnología para servicios contables y financieros en Colombia, integrando procesos digitales y diseño futurista.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
