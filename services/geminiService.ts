@@ -1,39 +1,30 @@
 
-import { GoogleGenAI } from "@google/genai";
+// Frontend client wrapper that calls the serverless API at `/api/chat`.
+// This keeps the API key private on the server and avoids exposing it to the browser.
 
-const SYSTEM_INSTRUCTION = `
-Eres el asistente experto de "Dilaf - Soluciones Contables". 
-Tu objetivo es ayudar a clientes en Colombia (emprendedores, PYMES y grandes empresas) con dudas generales sobre contabilidad, impuestos (IVA, ICA, Retefuente), nómina electrónica y facturación electrónica.
-Sé profesional, moderno, preciso y amigable. 
-Si el usuario pregunta por servicios específicos de la empresa, redirígelos a agendar una asesoría.
-No proporciones asesoría legal vinculante; siempre aclara que deben consultar con un contador asignado de Dilaf para casos complejos.
-Contexto: Colombia, DIAN, normatividad contable vigente.
-`;
+type HistoryItem = { role: string; parts: { text: string }[] };
 
-export class GeminiService {
-  private ai: GoogleGenAI;
-
-  constructor() {
-    this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  }
-
-  async generateChatResponse(history: { role: string; parts: { text: string }[] }[], userMessage: string) {
+export const geminiService = {
+  async generateChatResponse(history: HistoryItem[], userMessage: string) {
     try {
-      const response = await this.ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: [...history, { role: 'user', parts: [{ text: userMessage }] }],
-        config: {
-          systemInstruction: SYSTEM_INSTRUCTION,
-          temperature: 0.7,
-        },
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage, history })
       });
 
-      return response.text || "Lo siento, hubo un error procesando tu consulta financiera. Inténtalo de nuevo.";
-    } catch (error) {
-      console.error("Gemini API Error:", error);
-      return "Error de conexión con el núcleo de datos. Por favor, contacta a soporte.";
+      if (!res.ok) {
+        let body: any = null;
+        try { body = await res.json(); } catch (_) { body = null; }
+        console.error('/api/chat error', res.status, body);
+        return 'Error conectando con el servicio de IA. Intenta de nuevo.';
+      }
+
+      const data = await res.json();
+      return data?.text || 'Lo siento, no obtuve respuesta del asistente.';
+    } catch (err) {
+      console.error('Network error calling /api/chat', err);
+      return 'Error de red al conectar con el servicio de IA.';
     }
   }
-}
-
-export const geminiService = new GeminiService();
+};
