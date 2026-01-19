@@ -97,7 +97,7 @@ const ContactForm: React.FC = () => {
                   </div>
                 </a>
                 
-                <a href="mailto:dilafcontables@dilaf.com" className="flex items-center space-x-4 group cursor-pointer">
+                <a href="mailto:contabilidad@contadilaf.com" className="flex items-center space-x-4 group cursor-pointer">
                   <div className="w-12 h-12 glass rounded-full flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/20 transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -105,7 +105,7 @@ const ContactForm: React.FC = () => {
                   </div>
                   <div>
                     <div className="text-sm text-slate-500 uppercase font-bold tracking-widest">Escríbenos</div>
-                    <div className="text-xl font-medium group-hover:text-cyan-400 transition-colors">dilafcontables@dilaf.com</div>
+                    <div className="text-xl font-medium group-hover:text-cyan-400 transition-colors">contabilidad@contadilaf.com</div>
                   </div>
                 </a>
               </div>
